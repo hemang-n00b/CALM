@@ -1,4 +1,4 @@
-# DOMA-SMOL
+# CALM
 
 Below is the model composition of each set
 ## SET 1
