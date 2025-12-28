@@ -21,10 +21,10 @@ The `visualize_latency.py` script generates two types of visualizations:
 ## Data Characteristics
 
 The `april9_256_40.jsonl` file contains latency values that:
-- Start from a few seconds (minimum ~2s)
+- Start from a few seconds (minimum ~5s)
 - Gradually increase through the dataset
-- Reach thousands of seconds at the end (maximum ~5000s)
-- Show a wide distribution with mean ~945s and median ~260s
+- Reach thousands of seconds at the end (maximum ~2614s)
+- Show a wide distribution with mean ~1359s and median ~1321s
 
 ## Usage
 
@@ -106,16 +106,16 @@ For `april9_256_40.jsonl`:
 
 | Metric | Value |
 |--------|-------|
-| Total Samples | 256 |
-| Minimum | 2.13s |
-| Median (P50) | 260.33s |
-| Mean | 944.75s |
-| P90 | 3235.20s |
-| P95 | 4261.88s |
-| P99 | 4893.11s |
-| P99.9 | 4988.97s |
-| Maximum | 4996.86s |
-| Std Dev | 1397.20s |
+| Total Samples | 500 |
+| Minimum | 5.27s |
+| Median (P50) | 1320.61s |
+| Mean | 1358.64s |
+| P90 | 2555.86s |
+| P95 | 2598.06s |
+| P99 | 2609.68s |
+| P99.9 | 2613.63s |
+| Maximum | 2614.49s |
+| Std Dev | 892.68s |
 
 ## Dependencies
 
@@ -161,9 +161,10 @@ python3 visualize_latency.py implementation/no_lru_no_adap/latency_values.jsonl
 
 The visualizations for `april9_256_40.jsonl` show:
 
-1. **High Tail Latency**: P99 is ~4893s, indicating that 1% of requests experience very high latency
-2. **Wide Distribution**: Large standard deviation (1397s) shows high variability
-3. **Skewed Distribution**: Mean (945s) is much higher than median (260s), indicating right skew
-4. **Performance Issues**: The majority of latencies are in the hundreds to thousands of seconds range
+1. **High Tail Latency**: P99 is ~2610s, indicating that 1% of requests experience very high latency
+2. **Wide Distribution**: Standard deviation of 893s shows significant variability in latency
+3. **Bimodal Distribution**: The histogram shows a concentration of low latencies (<100s) and a spread of high latencies (>500s), with relatively uniform distribution in the high range
+4. **Consistent High Latencies**: Mean (1359s) is very close to median (1321s), indicating that most requests experience similarly high latency rather than just outliers
+5. **Performance Issues**: The majority of latencies are in the thousands of seconds range, with tight clustering at the tail (P90-P99 all above 2500s)
 
-This suggests potential performance bottlenecks or resource contention issues that cause some requests to take significantly longer than others.
+This suggests systemic performance issues where most requests experience very high latency, with a small subset completing much faster. This pattern could indicate resource saturation or significant processing overhead.
