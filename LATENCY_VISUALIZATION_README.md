@@ -163,8 +163,8 @@ The visualizations for `april9_256_40.jsonl` show:
 
 1. **High Tail Latency**: P99 is ~2610s, indicating that 1% of requests experience very high latency
 2. **Wide Distribution**: Standard deviation of 893s shows significant variability in latency
-3. **Bimodal Distribution**: The histogram shows a concentration of low latencies (<100s) and a spread of high latencies (>500s), with relatively uniform distribution in the high range
-4. **Consistent High Latencies**: Mean (1359s) is very close to median (1321s), indicating that most requests experience similarly high latency rather than just outliers
+3. **Right-Skewed Distribution**: The histogram shows a small concentration of low latencies (<100s) with a long tail of higher latencies spreading across the hundreds to thousands of seconds range
+4. **Near-Symmetric High Latency Region**: Mean (1359s) is very close to median (1321s), indicating that the bulk of the distribution is relatively symmetric around these high values, though with a small cluster of faster requests pulling the distribution leftward
 5. **Performance Issues**: The majority of latencies are in the thousands of seconds range, with tight clustering at the tail (P90-P99 all above 2500s)
 
 This suggests systemic performance issues where most requests experience very high latency, with a small subset completing much faster. This pattern could indicate resource saturation or significant processing overhead.
