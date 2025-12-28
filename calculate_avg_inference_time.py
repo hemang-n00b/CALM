@@ -15,19 +15,20 @@ import math
 
 def calculate_std_deviation(values, mean):
     """
-    Calculate standard deviation for a list of values.
+    Calculate sample standard deviation for a list of values.
     
     Args:
         values: List of numeric values
         mean: Pre-calculated mean of the values
         
     Returns:
-        Standard deviation
+        Sample standard deviation
     """
     if len(values) < 2:
         return 0.0
     
-    variance = sum((x - mean) ** 2 for x in values) / len(values)
+    # Use sample standard deviation (n-1) for unbiased estimator
+    variance = sum((x - mean) ** 2 for x in values) / (len(values) - 1)
     return math.sqrt(variance)
 
 
