@@ -11,15 +11,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 from pathlib import Path
+from matplotlib.patches import Patch
 
 
 def load_latencies(file_path):
     """Load latency values from JSONL file"""
     latencies = []
     with open(file_path, 'r') as f:
-        for line in f:
-            data = json.loads(line)
-            latencies.append(data['latency'])
+        for line_num, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:  # Skip empty lines
+                continue
+            try:
+                data = json.loads(line)
+                if 'latency' not in data:
+                    print(f"Warning: Line {line_num} missing 'latency' key, skipping")
+                    continue
+                latencies.append(data['latency'])
+            except json.JSONDecodeError as e:
+                print(f"Warning: Line {line_num} has invalid JSON: {e}, skipping")
+                continue
     return latencies
 
 
@@ -106,7 +117,6 @@ def plot_latency_distribution(latencies, output_file='latency_distribution.png')
     ax.grid(axis='y', alpha=0.3, linestyle='--')
     
     # Add legend for color coding
-    from matplotlib.patches import Patch
     legend_elements = [
         Patch(facecolor='#2ecc71', edgecolor='black', label='Low (< 100s)'),
         Patch(facecolor='#f39c12', edgecolor='black', label='Medium (100-500s)'),
@@ -170,7 +180,6 @@ def plot_combined_visualization(latencies, output_file='combined_latency_visuali
     ax2.set_title('Latency Distribution', fontsize=12, fontweight='bold')
     ax2.grid(axis='y', alpha=0.3, linestyle='--')
     
-    from matplotlib.patches import Patch
     legend_elements = [
         Patch(facecolor='#2ecc71', edgecolor='black', label='< 100s'),
         Patch(facecolor='#f39c12', edgecolor='black', label='100-500s'),
