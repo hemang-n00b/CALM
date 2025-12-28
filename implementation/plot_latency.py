@@ -18,6 +18,7 @@ import json
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 from pathlib import Path
 
 
@@ -207,7 +208,6 @@ def plot_latency_distribution(latencies, output_file='latency_distribution.png')
     ax1.set_axisbelow(True)
     
     # Add legend for color coding
-    from matplotlib.patches import Patch
     legend_elements = [
         Patch(facecolor='#3498db', alpha=0.7, label='< P90'),
         Patch(facecolor='#f39c12', alpha=0.7, label='P90-P95'),
